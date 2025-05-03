@@ -23,7 +23,16 @@ public class MainApp {
         while (runAgain) {
             System.out.println("\nTillgängliga valutakonverterare:");
             for (int i = 0; i < converters.length; i++) {
-                System.out.printf("  %d) %s → SEK%n", i + 1, converters[i].getSourceCurrency());
+                CurrencyConverter converter = converters[i];
+                Class<?> clazz = converter.getClass();
+                String displayName = converter.getSourceCurrency();
+
+                if (clazz.isAnnotationPresent(api.CurrencyInfo.class)) {
+                    api.CurrencyInfo info = clazz.getAnnotation(api.CurrencyInfo.class);
+                    displayName = info.value() + " (" + converter.getSourceCurrency() + ")";
+                }
+
+                System.out.printf("  %d) %s%n", i + 1, displayName);
             }
 
             System.out.print("\nAnge numret på önskad konverterare: ");

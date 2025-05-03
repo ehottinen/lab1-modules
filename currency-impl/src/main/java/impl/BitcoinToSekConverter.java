@@ -1,7 +1,9 @@
 package impl;
 
 import api.CurrencyConverter;
+import api.CurrencyInfo;
 
+@CurrencyInfo("Bitcoin")
 public class BitcoinToSekConverter implements CurrencyConverter {
     @Override
     public String getSourceCurrency() {
